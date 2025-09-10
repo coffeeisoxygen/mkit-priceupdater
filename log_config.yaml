@@ -38,9 +38,9 @@ extra:
   env: "override me please"
 # silent log from certain libraries
 activation:
-  - ["uvicorn.watchfiles", false]
-  - ["aiosqlite", false]
-  - ["asyncio", false]
-  - ["uvicorn.protocols", false]
-  - ["watchfiles", false]
-  - ["another_library.module", true]
+  # - ["uvicorn.watchfiles", false]
+  # - ["aiosqlite", false]
+  # - ["asyncio", false]
+  # - ["uvicorn.protocols", false]
+  # - ["watchfiles", false]
+  # - ["another_library.module", true]
