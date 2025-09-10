@@ -5,8 +5,8 @@ from pathlib import Path
 from loguru import logger
 from loguru_config import LoguruConfig
 
-from src.mlogging.default import load_logging_config
-from src.mlogging.patcher import extra_patcher, masking_patcher
+from mlogging.default import load_logging_config
+from mlogging.patcher import extra_patcher, masking_patcher
 
 
 class InterceptHandler(logging.Handler):
@@ -39,13 +39,13 @@ def patcher_wrapper(
 
 
 def setup_logging(
-    config_path: str | Path | None = None, env: str = "development"
+    config_path: str | Path | None = None, env: str = "production"
 ) -> None:
     """Setup logging: intercept stdlib, propagate loggers, masking, exception, traceback, and loguru config.
 
     Args:
         config_path: Path to YAML config file (optional).
-        env: Environment name (default: "development").
+        env: Environment name (default: "production").
     """
     config = load_logging_config(config_path)
 
@@ -60,19 +60,21 @@ def setup_logging(
                 logging_logger.setLevel(config.propogate.level_to_pass)
 
     # Tentukan sumber log
-    source = "default"
-    if config_path is not None:
-        source = (
-            Path(config_path).name
-            if isinstance(config_path, (str, Path))
-            else str(config_path)
-        )
+    # source = "default"
+    # if config_path is not None:
+    #     source = (
+    #         Path(config_path).name
+    #         if isinstance(config_path, (str, Path))
+    #         else str(config_path)
+    #     )
 
     # Convert config to dict for LoguruConfig
     config_dict = config.model_dump(exclude={"masking", "propogate"})
     LoguruConfig.load(config_or_file=config_dict, configure=True)
 
-    default_extra = {"env": env, "source": source}
+    # default_extra = {"env": env, "source": source}
+
+    default_extra = {"env": env}
 
     def patcher(record):
         patcher_wrapper(record, masking_config=config.masking.model_dump())
