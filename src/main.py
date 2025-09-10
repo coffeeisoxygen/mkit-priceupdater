@@ -12,10 +12,11 @@ setup_logging(config_path=LOG_CONFIG_PATH, env=settings.APP.ENVIRONMENT)
 
 
 def main():
-    logger.bind(env=settings.APP.ENVIRONMENT).debug(
-        f"APP settings: {settings.APP.model_dump()}"
-    )
+    pass
 
 
 if __name__ == "__main__":
+    logger.bind(env=settings.APP.ENVIRONMENT).debug(
+        f"APP settings: {settings.APP.model_dump()}"
+    )
     main()
