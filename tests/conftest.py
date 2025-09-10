@@ -1,4 +1,5 @@
 # testing environment
+
 from pathlib import Path
 
 from config.settings import get_settings
@@ -8,3 +9,5 @@ TEST_ENV_FILE = BASE_DIR / ".env.test"
 
 
 test_settings = get_settings(_env_file=TEST_ENV_FILE)
+
+# intercept logging to loguru
